@@ -3,24 +3,44 @@ using namespace std;
 
 class Todo{
 	private:
-	int _id;
 	string _header;
 	string _description;
 	
 	public:
-	Todo(int id, string header, string description){
-		_id = id;
+	Todo * next;	
+	Todo * first;	
+	Todo * last;	
+	
+	Todo(){
+		
+	}
+		
+	Todo(string header, string description){
 		_header = header;
 		_description = description;
 	}
 	
-	void Print(){
-		cout << _id << ", " << _header << ", " << _description;
+	Init(){
+		next = NULL;
+		first = NULL;
+		last = NULL;
 	}
 	
-	int Getid(){
-		return _id;
+	static Todo * CreateNode(){
+		Todo * newNode = new Todo();
+		newNode -> Init();
+		return newNode;
 	}
+	static Todo * CreateNode(string header, string description){
+		Todo * newNode = new Todo(header, description);
+		newNode -> Init();
+		return newNode;
+	}
+	
+	void Print(){
+		cout << _header << ", " << _description;
+	}
+	
 	string Getheader(){
 		return _header;
 	}
@@ -28,9 +48,6 @@ class Todo{
 		return _description;
 	}
 	
-	void Setid(int id){
-		_id = id;
-	}
 	void Setheader(string header){
 		_header = header;
 	}
