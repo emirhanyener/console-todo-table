@@ -19,10 +19,10 @@ class FileSystem{
 		columnList = Column::CreateNode();
 		string text;
 		string temp;
-		ifstream filet("todo.dat");
+		ifstream filet("src/todo.dat");
 		if(filet == NULL){
 			cout << "file not exist";
-			ofstream filet("todo.dat");
+			ofstream filet("src/todo.dat");
 			filet.close();
 		}
 		else{
@@ -30,21 +30,19 @@ class FileSystem{
 				Todo * node = Todo::CreateNode();
 				
 				int column = 0;
+				temp = "";
 				for(int i = 0; text[i] != '\0'; i++){
-					temp += text[i];
-					
-					if(text[i] != ',' && text[i+1] != '\0')
-						continue;
-						
-					if(column == 1){
-						node -> Setdescription(temp);
-					}
-					if(column == 0){
+					if(text[i] == ','){
 						node -> Setheader(temp);
+						temp = "";
+						continue;
 					}
-					
-					column++;
-					temp = "";
+					if(text[i+1] == '\0'){
+						temp += text[i];
+						node -> Setdescription(temp);
+						continue;
+					}
+					temp += text[i];
 				}
 				if(todoList -> last == NULL){
 					todoList -> first = node;
@@ -58,10 +56,10 @@ class FileSystem{
 		}
 		filet.close();
 		
-		ifstream filec("column.dat");
+		ifstream filec("src/column.dat");
 		if(filec == NULL){
 			cout << "file not exist";
-			ofstream filec("column.dat");
+			ofstream filec("src/column.dat");
 			filec.close();
 		}
 		else{
@@ -149,19 +147,27 @@ class FileSystem{
 			columnList -> last = newNode;
 		}
 		else{
-			cout << "this header exist" << endl;
+			cout << "this column exist" << endl;
 		}
-		
 	}
 	
 	void WriteTodoList(){
-		ofstream file("todo.dat");
+		ofstream filet("src/todo.dat");
 		tempt = todoList -> first;
 		while(tempt != NULL){
-			file << tempt -> Getheader() << "," << tempt -> Getdescription() << endl;
+			filet << tempt -> Getheader() << "," << tempt -> Getdescription() << endl;
 			tempt = tempt -> next;
 		}
-		file.close();
+		filet.close();
+	}
+	void WriteColumnList(){
+		ofstream filec("src/column.dat");
+		tempc = columnList -> first;
+		while(tempc != NULL){
+			filec << tempc -> Getheader() << endl;
+			tempc = tempc -> next;
+		}
+		filec.close();
 	}
 	
 	void DeleteTodo(string header){
@@ -180,6 +186,24 @@ class FileSystem{
 				break;
 			}
 			tempt = tempt -> next;
+		}
+	}
+	void DeleteColumn(string header){
+		tempc = columnList -> first;
+		
+		while(tempc != NULL){
+			if(columnList -> first -> Getheader() == header){
+				columnList -> first = columnList -> first -> next;
+				break;
+			}
+			if(tempc -> next -> Getheader() == header){
+				if(tempc -> next == columnList -> last)
+					columnList -> last = tempc;
+				tempc -> next = tempc -> next -> next;
+				cout << "deleted" << endl;
+				break;
+			}
+			tempc = tempc -> next;
 		}
 	}
 };
