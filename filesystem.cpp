@@ -7,8 +7,10 @@ using namespace std;
 class FileSystem{
 	public:
 	Todo * todoList;
+	Todo * tempt;
 	
 	FileSystem(){
+		tempt = Todo::CreateNode();
 		todoList = Todo::CreateNode();
 		string text;
 		string temp;
@@ -43,12 +45,30 @@ class FileSystem{
 		}
 	}
 	
+	void ReadTodoList(){
+		tempt = todoList -> first;
+		while(tempt != NULL){
+			cout << tempt -> Getheader() << ", " << tempt -> Getdescription() << endl;
+			tempt = tempt -> next;
+		}
+	}
+	
+	void AddTodo(string header, string description){
+		Todo * newNode = Todo::CreateNode(header, description);
+		todoList -> last -> next = newNode;
+		todoList -> last = newNode;
+	}
+	
 	void WriteTodoList(){
-		Todo * temp = Todo::CreateNode();
-		temp = todoList -> first;
-		while(temp != NULL){
-			cout << temp -> Getheader() << ", " << temp -> Getdescription() << endl;
-			temp = temp -> next;
+		ofstream file ("ext.dat");
+		
+		tempt = todoList -> first;
+		while(tempt != NULL){
+			file << tempt -> Getheader() << ", " << tempt -> Getdescription() << endl;
+			tempt = tempt -> next;
 		}
 	}
 };
+
+
+
