@@ -43,6 +43,7 @@ class FileSystem{
 				todoList -> last = node;
 			}
 		}
+		file.close();
 	}
 	
 	void ReadTodoList(){
@@ -54,21 +55,51 @@ class FileSystem{
 	}
 	
 	void AddTodo(string header, string description){
-		Todo * newNode = Todo::CreateNode(header, description);
-		todoList -> last -> next = newNode;
-		todoList -> last = newNode;
+		bool control = true;
+		tempt = todoList -> first;
+		while(tempt != NULL){
+			if(tempt -> Getheader() == header)
+				control = false;
+			tempt = tempt -> next;
+		}
+		
+		if(control){
+			Todo * newNode = Todo::CreateNode(header, description);
+			todoList -> last -> next = newNode;
+			todoList -> last = newNode;
+		}
+		else{
+			cout << "this header exists" << endl;
+		}
+		
 	}
 	
 	void WriteTodoList(){
-		ofstream file ("ext.dat");
-		
+		ofstream file("db.dat");
 		tempt = todoList -> first;
 		while(tempt != NULL){
 			file << tempt -> Getheader() << ", " << tempt -> Getdescription() << endl;
 			tempt = tempt -> next;
 		}
+		file.close();
+	}
+	
+	void DeleteTodo(string header){
+		tempt = todoList -> first;
+		
+		while(tempt != NULL){
+			if(todoList -> first -> Getheader() == header){
+				todoList -> first = todoList -> first -> next;
+				break;
+			}
+			if(tempt -> next -> Getheader() == header){
+				if(tempt -> next == todoList -> last)
+					todoList -> last = tempt;
+				tempt -> next = tempt -> next -> next;
+				cout << "deleted" << endl;
+				break;
+			}
+			tempt = tempt -> next;
+		}
 	}
 };
-
-
-
