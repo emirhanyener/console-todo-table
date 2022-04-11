@@ -8,6 +8,8 @@ int main() {
 	FileSystem file;
 	string command = "";
 	string value = "";
+	string description = "";
+	string column = "";
 	while(command != "exit"){
 		cout << "commands;" << endl << "+column" << endl << "+todo" << endl << "+exit" << endl << "command : ";
 		cin >> command;
@@ -40,7 +42,11 @@ int main() {
 			if(command == "add"){
 				cout << "todo > add > header name : ";
 				cin >> value;
-				file.AddTodo(value);
+				cout << "todo > add > descrition : ";
+				cin >> description;
+				cout << "todo > add > column name : ";
+				cin >> column;
+				file.AddTodo(value, description, column);
 				cout << value << "added." << endl;
 			}
 			if(command == "list"){

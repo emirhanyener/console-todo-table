@@ -16,9 +16,10 @@ class Todo{
 		
 	}
 		
-	Todo(string header, string description){
+	Todo(string header, string description, string column){
 		_header = header;
 		_description = description;
+		_column = column;
 	}
 	
 	Init(){
@@ -32,14 +33,14 @@ class Todo{
 		newNode -> Init();
 		return newNode;
 	}
-	static Todo * CreateNode(string header, string description){
-		Todo * newNode = new Todo(header, description);
+	static Todo * CreateNode(string header, string description, string column){
+		Todo * newNode = new Todo(header, description, column);
 		newNode -> Init();
 		return newNode;
 	}
 	
 	void Print(){
-		cout << _header << ", " << _description;
+		cout << _header << ", " << _description << ", " << _column;
 	}
 	
 	string Getheader(){

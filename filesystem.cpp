@@ -33,13 +33,17 @@ class FileSystem{
 				temp = "";
 				for(int i = 0; text[i] != '\0'; i++){
 					if(text[i] == ','){
-						node -> Setheader(temp);
+						if(column == 0)
+							node -> Setheader(temp);
+						if(column == 1)
+							node -> Setdescription(temp);
+						column++;
 						temp = "";
 						continue;
 					}
 					if(text[i+1] == '\0'){
 						temp += text[i];
-						node -> Setdescription(temp);
+						node -> Setcolumn(temp);
 						continue;
 					}
 					temp += text[i];
@@ -83,7 +87,7 @@ class FileSystem{
 	void ReadTodoList(){
 		tempt = todoList -> first;
 		while(tempt != NULL){
-			cout << tempt -> Getheader() << "," << tempt -> Getdescription() << endl;
+			cout << tempt -> Getheader() << "," << tempt -> Getdescription() << "," << tempt -> Getcolumn() << endl;
 			tempt = tempt -> next;
 		}
 		cout << endl;
@@ -99,10 +103,10 @@ class FileSystem{
 		cout << endl;
 	}
 	
-	void AddTodo(string header, string description){
+	void AddTodo(string header, string description, string column){
 		bool control = true;
 		if(todoList -> first == NULL && todoList -> last == NULL){
-			Todo * newNode = Todo::CreateNode(header, description);
+			Todo * newNode = Todo::CreateNode(header, description, column);
 			todoList -> first = newNode;
 			todoList -> last = newNode;
 			return;
@@ -116,7 +120,7 @@ class FileSystem{
 		}
 		
 		if(control){
-			Todo * newNode = Todo::CreateNode(header, description);
+			Todo * newNode = Todo::CreateNode(header, description, column);
 			todoList -> last -> next = newNode;
 			todoList -> last = newNode;
 		}
@@ -155,7 +159,7 @@ class FileSystem{
 		ofstream filet("src/todo.dat");
 		tempt = todoList -> first;
 		while(tempt != NULL){
-			filet << tempt -> Getheader() << "," << tempt -> Getdescription() << endl;
+			filet << tempt -> Getheader() << "," << tempt -> Getdescription() << "," << tempt -> Getcolumn() << endl;
 			tempt = tempt -> next;
 		}
 		filet.close();
