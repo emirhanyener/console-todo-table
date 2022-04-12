@@ -39,6 +39,19 @@ class Todo{
 		return newNode;
 	}
 	
+	bool isExist(string header){
+		Todo * temp = this -> first;
+		
+		while(temp != NULL){
+			if(temp -> Getheader() == header){
+				delete temp;
+				return true;
+			}
+			temp = temp -> next;
+		}
+		return false;
+	}
+	
 	void Print(){
 		cout << _header << ", " << _description << ", " << _column;
 	}

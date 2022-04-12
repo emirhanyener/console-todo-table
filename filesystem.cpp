@@ -21,7 +21,6 @@ class FileSystem{
 		string temp;
 		ifstream filet("src/todo.dat");
 		if(filet == NULL){
-			cout << "file not exist";
 			ofstream filet("src/todo.dat");
 			filet.close();
 		}
@@ -62,7 +61,6 @@ class FileSystem{
 		
 		ifstream filec("src/column.dat");
 		if(filec == NULL){
-			cout << "file not exist";
 			ofstream filec("src/column.dat");
 			filec.close();
 		}
@@ -104,31 +102,21 @@ class FileSystem{
 	}
 	
 	void AddTodo(string header, string description, string column){
-		bool controlt = true;
-		bool controlc = true;
-		if(todoList -> first == NULL && todoList -> last == NULL){
-			Todo * newNode = Todo::CreateNode(header, description, column);
-			todoList -> first = newNode;
-			todoList -> last = newNode;
-			return;
-		}
-		tempt = todoList -> first;
+		bool controlt = false;
+		bool controlc = false;
 		
-		while(tempt != NULL){
-			if(tempt -> Getheader() == header)
-				controlt = false;
-			tempt = tempt -> next;
-		}
-		tempc = columnList -> first;
+		controlt = todoList -> isExist(header);
+		controlc = columnList -> isExist(column);
 		
-		while(tempc != NULL){
-			if(tempc -> Getheader() == header)
-				controlc = false;
-			tempc = tempc -> next;
-		}
 		
-		if(controlt){
-			if(!controlc){
+		if(!controlt){
+			if(controlc){
+				if(todoList -> first == NULL && todoList -> last == NULL){
+					Todo * newNode = Todo::CreateNode(header, description, column);
+					todoList -> first = newNode;
+					todoList -> last = newNode;
+					return;
+				}
 				Todo * newNode = Todo::CreateNode(header, description, column);
 				todoList -> last -> next = newNode;
 				todoList -> last = newNode;
@@ -206,7 +194,20 @@ class FileSystem{
 		}
 	}
 	void DeleteColumn(string header){
+		bool controlt = true;
 		tempc = columnList -> first;
+		tempt = todoList -> first;
+		
+		while(tempt != NULL){
+			if(tempt -> Getcolumn() == header)
+				controlt = false;
+			tempt = tempt -> next;
+		}
+		
+		if(!controlt){
+			cout << "this column has a todo" << endl;
+			return;
+		}
 		
 		while(tempc != NULL){
 			if(columnList -> first -> Getheader() == header){
