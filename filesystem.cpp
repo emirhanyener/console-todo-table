@@ -104,7 +104,8 @@ class FileSystem{
 	}
 	
 	void AddTodo(string header, string description, string column){
-		bool control = true;
+		bool controlt = true;
+		bool controlc = true;
 		if(todoList -> first == NULL && todoList -> last == NULL){
 			Todo * newNode = Todo::CreateNode(header, description, column);
 			todoList -> first = newNode;
@@ -115,14 +116,26 @@ class FileSystem{
 		
 		while(tempt != NULL){
 			if(tempt -> Getheader() == header)
-				control = false;
+				controlt = false;
 			tempt = tempt -> next;
 		}
+		tempc = columnList -> first;
 		
-		if(control){
-			Todo * newNode = Todo::CreateNode(header, description, column);
-			todoList -> last -> next = newNode;
-			todoList -> last = newNode;
+		while(tempc != NULL){
+			if(tempc -> Getheader() == header)
+				controlc = false;
+			tempc = tempc -> next;
+		}
+		
+		if(controlt){
+			if(!controlc){
+				Todo * newNode = Todo::CreateNode(header, description, column);
+				todoList -> last -> next = newNode;
+				todoList -> last = newNode;
+			}
+			else{
+				cout << "column not exist" << endl;
+			}
 		}
 		else{
 			cout << "this header exist" << endl;
