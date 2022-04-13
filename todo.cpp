@@ -51,6 +51,25 @@ class Todo{
 		}
 		return false;
 	}
+
+	void Delete(string header){
+		Todo * temp = this -> first;
+		
+		while(temp != NULL){
+			if(this -> first -> Getheader() == header){
+				this -> first = this -> first -> next;
+				break;
+			}
+			if(temp -> next -> Getheader() == header){
+				if(temp -> next == this -> last)
+					this -> last = temp;
+				temp -> next = temp -> next -> next;
+				cout << "deleted" << endl;
+				break;
+			}
+			temp = temp -> next;
+		}
+	}
 	
 	void Print(){
 		cout << _header << ", " << _description << ", " << _column;

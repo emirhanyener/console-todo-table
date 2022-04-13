@@ -48,6 +48,26 @@ class Column{
 		return false;
 	}
 	
+	
+	void DeleteColumn(string header){
+		Column * temp = this -> first;
+		
+		while(temp != NULL){
+			if(columnList -> first -> Getheader() == header){
+				columnList -> first = columnList -> first -> next;
+				break;
+			}
+			if(temp -> next -> Getheader() == header){
+				if(temp -> next == columnList -> last)
+					columnList -> last = temp;
+				temp -> next = temp -> next -> next;
+				cout << "deleted" << endl;
+				break;
+			}
+			temp = temp -> next;
+		}
+	}
+	
 	void Print(){
 		cout << _header;
 	}

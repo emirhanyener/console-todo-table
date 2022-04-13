@@ -176,23 +176,9 @@ class FileSystem{
 	}
 	
 	void DeleteTodo(string header){
-		tempt = todoList -> first;
-		
-		while(tempt != NULL){
-			if(todoList -> first -> Getheader() == header){
-				todoList -> first = todoList -> first -> next;
-				break;
-			}
-			if(tempt -> next -> Getheader() == header){
-				if(tempt -> next == todoList -> last)
-					todoList -> last = tempt;
-				tempt -> next = tempt -> next -> next;
-				cout << "deleted" << endl;
-				break;
-			}
-			tempt = tempt -> next;
-		}
+		todoList -> Delete(header);
 	}
+	
 	void DeleteColumn(string header){
 		bool controlt = true;
 		tempc = columnList -> first;
