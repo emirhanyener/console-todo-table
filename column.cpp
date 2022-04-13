@@ -49,23 +49,24 @@ class Column{
 	}
 	
 	
-	void DeleteColumn(string header){
+	void Delete(string header){
 		Column * temp = this -> first;
 		
 		while(temp != NULL){
-			if(columnList -> first -> Getheader() == header){
-				columnList -> first = columnList -> first -> next;
+			if(this -> first -> Getheader() == header){
+				this -> first = this -> first -> next;
 				break;
 			}
 			if(temp -> next -> Getheader() == header){
-				if(temp -> next == columnList -> last)
-					columnList -> last = temp;
+				if(temp -> next == this -> last)
+					this -> last = temp;
 				temp -> next = temp -> next -> next;
 				cout << "deleted" << endl;
 				break;
 			}
 			temp = temp -> next;
 		}
+		delete temp;
 	}
 	
 	void Print(){

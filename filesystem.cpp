@@ -195,19 +195,6 @@ class FileSystem{
 			return;
 		}
 		
-		while(tempc != NULL){
-			if(columnList -> first -> Getheader() == header){
-				columnList -> first = columnList -> first -> next;
-				break;
-			}
-			if(tempc -> next -> Getheader() == header){
-				if(tempc -> next == columnList -> last)
-					columnList -> last = tempc;
-				tempc -> next = tempc -> next -> next;
-				cout << "deleted" << endl;
-				break;
-			}
-			tempc = tempc -> next;
-		}
+		columnList -> Delete(header);
 	}
 };
