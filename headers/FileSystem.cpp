@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "todo.cpp"
-#include "column.cpp"
+#include "Todo.h"
+#include "Column.h"
 
 using namespace std;
 

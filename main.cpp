@@ -1,9 +1,8 @@
 #include <iostream>
 #include <windows.h>
-#include "filesystem.cpp"
-using namespace std;
+#include "headers/FileSystem.h"
 
-void addTodo(int id, string header, string description);
+using namespace std;
 
 int main() {
 	FileSystem file;
