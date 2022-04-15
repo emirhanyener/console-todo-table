@@ -1,11 +1,15 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <cstring>
+#include <sstream>
 #include "Column.h"
 #include "Todo.h"
+#include "FileManager.h"
 
 using namespace std;
 
-class FileSystem{
+class NodeManager{
 	public:
 	Todo * todoList;
 	Column * columnList;
@@ -17,70 +21,57 @@ class FileSystem{
 		todoList = Node<Todo>::CreateNode();
 		tempc = Node<Column>::CreateNode();
 		columnList = Node<Column>::CreateNode();
-		
-		string text;
-		string temp;
-		ifstream filet("src/todo.dat");
-		if(filet == NULL){
-			ofstream filet("src/todo.dat");
-			filet.close();
-		}
-		else{
-			while(getline(filet, text)){
-				Todo * node = Node<Todo>::CreateNode();
-				
-				int column = 0;
-				temp = "";
-				for(int i = 0; text[i] != '\0'; i++){
-					if(text[i] == ','){
-						if(column == 0)
-							node -> Setheader(temp);
-						if(column == 1)
-							node -> Setdescription(temp);
-						column++;
-						temp = "";
-						continue;
-					}
-					if(text[i+1] == '\0'){
-						temp += text[i];
-						node -> Setcolumn(temp);
-						continue;
-					}
+		string text = "";
+		string temp = "";
+		FileManager managerTodo("src/todo.dat");
+		istringstream str(managerTodo.GetText());
+		while(getline(str, text)){
+			Todo * node = Node<Todo>::CreateNode();
+			
+			int column = 0;
+			temp = "";
+			for(int i = 0; text[i] != '\0'; i++){
+				if(text[i] == ','){
+					if(column == 0)
+						node -> Setheader(temp);
+					if(column == 1)
+						node -> Setdescription(temp);
+					column++;
+					temp = "";
+					continue;
+				}
+				if(text[i+1] == '\0'){
 					temp += text[i];
+					node -> Setcolumn(temp);
+					continue;
 				}
-				if(todoList -> last == NULL){
-					todoList -> first = node;
-					todoList -> last = node;
-				}
-				else{
-					todoList -> last -> next = node;
-					todoList -> last = node;
-				}
+				temp += text[i];
+			}
+			if(todoList -> last == NULL){
+				todoList -> first = node;
+				todoList -> last = node;
+			}
+			else{
+				todoList -> last -> next = node;
+				todoList -> last = node;
 			}
 		}
-		filet.close();
 		
-		ifstream filec("src/column.dat");
-		if(filec == NULL){
-			ofstream filec("src/column.dat");
-			filec.close();
-		}
-		else{
-			while(getline(filec, text)){
-				Column * node = Node<Column>::CreateNode();
-				node -> Setheader(text);
-				
-				if(columnList -> last == NULL){
-					columnList -> first = node;
-					columnList -> last = node;
-				}
-				else{
-					columnList -> last -> next = node;
-					columnList -> last = node;
-				}
+		FileManager managerColumn("src/column.dat");
+		istringstream strclm(managerColumn.GetText());
+		while(getline(strclm, text)){
+			Column * node = Node<Column>::CreateNode();
+			node -> Setheader(text);
+			
+			if(columnList -> last == NULL){
+				columnList -> first = node;
+				columnList -> last = node;
+			}
+			else{
+				columnList -> last -> next = node;
+				columnList -> last = node;
 			}
 		}
-		filec.close();
 	}
 	
 	void ReadTodoList(){

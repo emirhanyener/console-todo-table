@@ -6,7 +6,7 @@ using namespace std;
 class FileManager{
 	private:
 	string text = "";
-	string filetext = "";
+	string filetext;
 	char * filename;
 	
 	public:
