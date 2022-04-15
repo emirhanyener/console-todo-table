@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "Todo.h"
 #include "Column.h"
+#include "Todo.h"
 
 using namespace std;
 
@@ -13,10 +13,11 @@ class FileSystem{
 	Column * tempc;
 	
 	FileSystem(){
-		tempt = Todo::CreateNode();
-		todoList = Todo::CreateNode();
-		tempc = Column::CreateNode();
-		columnList = Column::CreateNode();
+		tempt = Node<Todo>::CreateNode();
+		todoList = Node<Todo>::CreateNode();
+		tempc = Node<Column>::CreateNode();
+		columnList = Node<Column>::CreateNode();
+		
 		string text;
 		string temp;
 		ifstream filet("src/todo.dat");
@@ -26,7 +27,7 @@ class FileSystem{
 		}
 		else{
 			while(getline(filet, text)){
-				Todo * node = Todo::CreateNode();
+				Todo * node = Node<Todo>::CreateNode();
 				
 				int column = 0;
 				temp = "";
@@ -66,7 +67,7 @@ class FileSystem{
 		}
 		else{
 			while(getline(filec, text)){
-				Column * node = Column::CreateNode();
+				Column * node = Node<Column>::CreateNode();
 				node -> Setheader(text);
 				
 				if(columnList -> last == NULL){
@@ -85,19 +86,17 @@ class FileSystem{
 	void ReadTodoList(){
 		tempt = todoList -> first;
 		while(tempt != NULL){
-			cout << tempt -> Getheader() << "," << tempt -> Getdescription() << "," << tempt -> Getcolumn() << endl;
+			tempt -> Print();
 			tempt = tempt -> next;
 		}
-		cout << endl;
 		cout << endl;
 	}
 	void ReadColumnList(){
 		tempc = columnList -> first;
 		while(tempc != NULL){
-			cout << tempc -> Getheader() <<  endl;
+			tempc -> Print();
 			tempc = tempc -> next;
 		}
-		cout << endl;
 		cout << endl;
 	}
 	

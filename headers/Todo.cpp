@@ -1,16 +1,15 @@
 #include <iostream>
+#include "Node.h"
+
 using namespace std;
 
-class Todo{
+class Todo : public Node<Todo>{
 	private:
 	string _header;
 	string _description;
 	string _column;
 	
 	public:
-	Todo * next;	
-	Todo * first;	
-	Todo * last;	
 	
 	Todo(){
 		
@@ -22,34 +21,10 @@ class Todo{
 		_column = column;
 	}
 	
-	Init(){
-		next = NULL;
-		first = NULL;
-		last = NULL;
-	}
-	
-	static Todo * CreateNode(){
-		Todo * newNode = new Todo();
-		newNode -> Init();
-		return newNode;
-	}
 	static Todo * CreateNode(string header, string description, string column){
 		Todo * newNode = new Todo(header, description, column);
 		newNode -> Init();
 		return newNode;
-	}
-	
-	bool isExist(string header){
-		Todo * temp = this -> first;
-		
-		while(temp != NULL){
-			if(temp -> Getheader() == header){
-				delete temp;
-				return true;
-			}
-			temp = temp -> next;
-		}
-		return false;
 	}
 
 	void Delete(string header){
@@ -72,7 +47,7 @@ class Todo{
 	}
 	
 	void Print(){
-		cout << _header << ", " << _description << ", " << _column;
+		cout << _header << ", " << _description << ", " << _column << endl;
 	}
 	
 	string Getheader(){
