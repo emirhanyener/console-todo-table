@@ -23,9 +23,7 @@ class NodeManager{
 		columnList = Node<Column>::CreateNode();
 		string text = "";
 		string temp = "";
-		cout << "managertodo" << endl;
 		FileManager managerTodo("src/todo.dat");
-		cout << "managertodo" << endl;
 		istringstream str(managerTodo.GetText());
 		while(getline(str, text)){
 			Todo * node = Node<Todo>::CreateNode();
@@ -58,9 +56,7 @@ class NodeManager{
 			}
 		}
 		
-		cout << "managercolumn" << endl;
 		FileManager managerColumn("src/column.dat");
-		cout << "managercolumn" << endl;
 		istringstream strclm(managerColumn.GetText());
 		while(getline(strclm, text)){
 			Column * node = Node<Column>::CreateNode();

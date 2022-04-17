@@ -1,20 +1,24 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
 class FileManager{
 	private:
-	string text = "";
+	string text;
 	string filetext;
-	char * filename;
+	string filename;
+	const char * filenameConverted;
 	
 	public:
-	FileManager(char * filename){
+	FileManager(string filename){
+		text = "";
+		filenameConverted = filename.c_str();
 		this->filename = filename;
-		ifstream file(filename);
-		if(file == NULL){
-			ofstream file(filename);
+		ifstream file(filenameConverted);
+		if(!file){
+			ofstream file(filenameConverted);
 		}
 		while(getline(file, text)){
 			filetext = text;
@@ -29,14 +33,14 @@ class FileManager{
 	void SetText(string value){
 		filetext = value;
 	}
-	void InsertText(string value, bool isNewLine = false){
+	void InsertText(string value, bool isNewLine = true){
 		if(isNewLine)
 			filetext += "\n";
 		filetext += value;
 	}
 	
 	void SaveFile(){
-		ofstream file(filename);
+		ofstream file(filenameConverted);
 		file << filetext;
 		file.close();
 	}
