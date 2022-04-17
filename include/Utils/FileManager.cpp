@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <direct.h>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class FileManager{
 	
 	public:
 	FileManager(string filename){
+		mkdir("src");
 		text = "";
 		filenameConverted = filename.c_str();
 		this->filename = filename;
