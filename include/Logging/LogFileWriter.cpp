@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../Utils/FileManager.h"
-#include "LogType.h"
+#include "ILog.h"
 
 using namespace std;
 
@@ -10,8 +10,8 @@ class LogFileWriter{
 		
 	}
 	
-	void AddLog(ILog log){
+	void AddLog(string context){
 		FileManager manager("log.txt");
-		manager.InsertText(log.getLog());
+		manager.InsertText(context);
 	}
 };

@@ -4,5 +4,5 @@ class ILog{
 	protected:
 	string content;
 	public:
-	virtual string getLog() = 0;
+	virtual string getLog();
 };

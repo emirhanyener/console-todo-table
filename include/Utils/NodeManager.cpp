@@ -16,18 +16,19 @@ class NodeManager{
 	Todo * tempt;
 	Column * tempc;
 	
-	FileSystem(){
+	NodeManager(){
 		tempt = Node<Todo>::CreateNode();
 		todoList = Node<Todo>::CreateNode();
 		tempc = Node<Column>::CreateNode();
 		columnList = Node<Column>::CreateNode();
 		string text = "";
 		string temp = "";
+		cout << "managertodo" << endl;
 		FileManager managerTodo("src/todo.dat");
+		cout << "managertodo" << endl;
 		istringstream str(managerTodo.GetText());
 		while(getline(str, text)){
 			Todo * node = Node<Todo>::CreateNode();
-			
 			int column = 0;
 			temp = "";
 			for(int i = 0; text[i] != '\0'; i++){
@@ -57,7 +58,9 @@ class NodeManager{
 			}
 		}
 		
+		cout << "managercolumn" << endl;
 		FileManager managerColumn("src/column.dat");
+		cout << "managercolumn" << endl;
 		istringstream strclm(managerColumn.GetText());
 		while(getline(strclm, text)){
 			Column * node = Node<Column>::CreateNode();
@@ -83,7 +86,7 @@ class NodeManager{
 		cout << endl;
 	}
 	void ReadColumnList(){
-		tempc = columnList -> first;
+		tempc = columnList -> first; 
 		while(tempc != NULL){
 			tempc -> Print();
 			tempc = tempc -> next;

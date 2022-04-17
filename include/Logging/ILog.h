@@ -1,6 +1,6 @@
 #ifndef ILOG_H
 #define ILOG_H
 
-   #include "ILog.cpp";
+   #include "ILog.cpp"
 
 #endif
